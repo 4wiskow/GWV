@@ -36,5 +36,6 @@ def get_path(start_node):
         current = current.get_parent()
     print(path)
 
+
 if __name__ == '__main__':
     setup()

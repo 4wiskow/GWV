@@ -93,6 +93,10 @@ class Labyrinth:
                 if node != 'x' and node.is_start():
                     return node
 
+    def get_other_portal(self):
+        pass
+
+
 
 class Node:
     """

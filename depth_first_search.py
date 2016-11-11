@@ -7,9 +7,14 @@ def search(stack, closed_list):
     else:
         current = stack.pop()
         if current.is_goal():
+
             return current
 
-        open_neighbors = [x for x in current.get_neighbors() if x not in closed_list and x not in stack]
+        if current.is_portal:
+
+            #current = maze.get_other_portal(current.get_position())
+
+         open_neighbors = [x for x in current.get_neighbors() if x not in closed_list and x not in stack]
         for n in open_neighbors:
             n.set_parent(current)
         stack += open_neighbors

@@ -102,6 +102,8 @@ class Node:
     def __init__(self, type_of_node):
         self.typeOfNode = type_of_node
         self.neighbors = []
+        self.parentNode = None
+        self.position = (0, 0)
 
     def __str__(self):
         """
@@ -117,6 +119,8 @@ class Node:
         :param position: the position of the current node in the Array
         """
         # (x, y)
+        self.position = position
+
         x = position[0]
         y = position[1]
 
@@ -149,6 +153,15 @@ class Node:
         :return: True, if this node is the start
         """
         return self.typeOfNode == 's'
+
+    def set_parent(self, node):
+        self.parentNode = node
+
+    def get_parent(self):
+        return self.parentNode
+
+    def get_position(self):
+        return self.position
 
 
 class MatrixIterator:

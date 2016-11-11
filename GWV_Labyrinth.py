@@ -7,8 +7,6 @@ class Labyrinth:
     to execute search algorithms.
     """
 
-    # TODO too much functionality in one class. Separate Reading, Constructing, printing,...
-
     def __init__(self):
         textlines = self.read_file()
 
@@ -16,10 +14,13 @@ class Labyrinth:
 
         self.representation = self.create_representation()
         self.connect_nodes(self.representation)
-        #self.print_search_state()
+        print(self.print_search_state())
 
     def read_file(self):
-        """Read the textfile containing ASCII-characters and return as a String without linebreaks"""
+        """
+        Read the textfile containing the problem described in ascii-art
+        :return String containig the ASCII-characters without linebreaks
+        """
 
         environments = ['blatt3_environment.txt', 'blatt3_environment_b.txt']
         choice = raw_input('Please choose the environment to use:\n'
@@ -42,6 +43,7 @@ class Labyrinth:
         or an 'x' where no node is to be created (e.g. a wall). This Array
         sticks to the layout given by the textfile, meaning that adjacent
         characters in the textfile are adjacent Nodes in this array.
+        :return 2D-Array containing Node-Objects and obstacle indicators ('x')
         """
 
         node_matrix = deepcopy(self.input_matrix)
@@ -69,16 +71,23 @@ class Labyrinth:
                     matrix[rownumber][colnumber] = 'x'
 
     def print_search_state(self):
-        """Put out a human-readable representation of a search state"""
+        """
+        Put out a human-readable representation of a search state
+        :return String of the search state in ascii-art
+        """
 
         ascii_rep = ''
         for row in self.representation:
             for col in row:
                 ascii_rep += col.__str__()  # DarfErDas?
             ascii_rep += '\n'
-        print(ascii_rep)
+        return ascii_rep
 
     def get_start(self):
+        """
+        Looks for the start node in the graph.
+        :return: the start node
+        """
         for row in self.representation:
             for node in row:
                 if node != 'x' and node.is_start():
@@ -95,6 +104,10 @@ class Node:
         self.neighbors = []
 
     def __str__(self):
+        """
+        More suitable String representation of a node.
+        :return: ' ', 'g' or 's' depending on the type of the node
+        """
         return self.typeOfNode
 
     def find_neighbors(self, matrix, position):
@@ -131,7 +144,33 @@ class Node:
         return self.typeOfNode == 'g'
 
     def is_start(self):
+        """
+        Is this node the start?
+        :return: True, if this node is the start
+        """
         return self.typeOfNode == 's'
+
+
+class MatrixIterator:
+    def __init__(self, matrix):
+        self.matrix = matrix
+        self.x = 0
+        self.y = 0
+        self.row_count = len(matrix)
+        self.column_count = len(matrix[0])
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        next_node = self.matrix[self.y][self.x]
+        if self.x == self.column_count:
+            self.x = 0
+            self.y += 1
+        else:
+            self.x += 1
+
+        return next_node
 
 if __name__ == '__main__':
     maze = Labyrinth()

@@ -24,13 +24,15 @@ def setup():
     start = maze.get_start()
 
     get_path(search([start], []))
+    maze.print_search_state()
 
 
 def get_path(start_node):
-    current = start_node
+    current = start_node.get_parent()
     path = ''
     while not current.is_start():
         path += str(current.get_position())
+        current.set_type_of_node('o')
         current = current.get_parent()
     print(path)
 

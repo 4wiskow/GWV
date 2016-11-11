@@ -14,7 +14,7 @@ class Labyrinth:
 
         self.representation = self.create_representation()
         self.connect_nodes(self.representation)
-        print(self.print_search_state())
+        #self.print_search_state()
 
     def read_file(self):
         """
@@ -81,7 +81,7 @@ class Labyrinth:
             for col in row:
                 ascii_rep += col.__str__()  # DarfErDas?
             ascii_rep += '\n'
-        return ascii_rep
+        print(ascii_rep)
 
     def get_start(self):
         """
@@ -162,6 +162,9 @@ class Node:
 
     def get_position(self):
         return self.position
+
+    def set_type_of_node(self, type):
+        self.typeOfNode = type
 
 
 class MatrixIterator:

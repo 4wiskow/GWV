@@ -1,0 +1,40 @@
+xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+x		x  	                               x
+x		x		                       x
+x		x		                       x
+x		x		   x                  x
+x              x		   x	               x
+x		x		   x                  x
+x     s—————————  >  g     x
+x		x		   x                  x
+x		x		   x                  x
+x		x		   x                  x
+x		x		   x                  x
+x		x		   x                  x
+x				   x                  x
+x				   x                  x
+xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+BFS -> finds the shortest path
+
+
+
+simplified:
+xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+x		x  	                               x
+x		x	  ……………..	        x
+x		x	  .	             .          x
+x		x	  .	   x        .          x
+x              x	  .	   x	     .          x
+x		x	  .	   x        .          x
+x     s                .                 g         x
+x	.	x	  .	   x                  x
+x	.	x	  .	   x                  x
+x	.	x	  .	   x                  x
+x	.	x	  .	   x                  x
+x	.	x	  .	    x                  x
+x	. . . . . . . . . .        x                  x
+x				    x                  x
+xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+DFS -> to make a path as long as possible, 
+and then go back (backtrack) to add branches
+also as long as possible. faster working 

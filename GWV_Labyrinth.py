@@ -10,6 +10,7 @@ class Labyrinth:
     def __init__(self):
         textlines = self.read_file()
 
+        self.portals = []
         self.input_matrix = [[char for char in row] for row in textlines]
 
         self.representation = self.create_representation()
@@ -50,7 +51,15 @@ class Labyrinth:
 
         for rownumber, row in enumerate(self.input_matrix):
             for colnumber, val in enumerate(row):
-                if val != 'x':
+                if self.input_matrix[rownumber][colnumber] == '1':
+                    new_node = Node(val)
+                    node_matrix[rownumber][colnumber] = new_node
+                    self.portals.append(('1', new_node))
+                elif self.input_matrix[rownumber][colnumber] == '2':
+                    new_node = Node(val)
+                    node_matrix[rownumber][colnumber] = new_node
+                    self.portals.append(('2', new_node))
+                elif val != 'x':
                     node_matrix[rownumber][colnumber] = Node(val)
                 else:
                     node_matrix[rownumber][colnumber] = 'x'
@@ -93,9 +102,10 @@ class Labyrinth:
                 if node != 'x' and node.is_start():
                     return node
 
-    def get_other_portal(self):
-        pass
-
+    def get_other_portal(self, portal_type, position):
+        for tuple in self.portals:
+            if tuple[0] == portal_type and tuple[1].get_position() != position:
+                return tuple[1]
 
 
 class Node:
@@ -114,7 +124,7 @@ class Node:
         More suitable String representation of a node.
         :return: ' ', 'g' or 's' depending on the type of the node
         """
-        return self.typeOfNode
+        return str(self.typeOfNode)
 
     def find_neighbors(self, matrix, position):
         """
@@ -170,6 +180,9 @@ class Node:
     def set_type_of_node(self, type):
         self.typeOfNode = type
 
+    def is_portal(self):
+        if self.typeOfNode == '1' or self.typeOfNode == '2':
+            return self.typeOfNode
 
 class MatrixIterator:
     def __init__(self, matrix):

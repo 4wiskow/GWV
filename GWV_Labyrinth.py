@@ -102,6 +102,17 @@ class Labyrinth:
                 if node != 'x' and node.is_start():
                     return node
 
+    def get_goal(self):
+        """
+        Looks for the start node in the graph.
+        :return: the start node
+        """
+        for row in self.representation:
+            for node in row:
+                if node != 'x' and node.is_goal():
+                    return node
+
+
     def get_other_portal(self, portal_type, position):
         for tuple in self.portals:
             if tuple[0] == portal_type and tuple[1].get_position() != position:
@@ -118,6 +129,9 @@ class Node:
         self.neighbors = []
         self.parentNode = None
         self.position = (0, 0)
+        self.cost =  0
+        self.estimated_cost = 0
+
 
     def __str__(self):
         """
@@ -184,26 +198,30 @@ class Node:
         if self.typeOfNode == '1' or self.typeOfNode == '2':
             return self.typeOfNode
 
-class MatrixIterator:
-    def __init__(self, matrix):
-        self.matrix = matrix
-        self.x = 0
-        self.y = 0
-        self.row_count = len(matrix)
-        self.column_count = len(matrix[0])
+    def get_cost(self):
 
-    def __iter__(self):
-        return self
+        return self.cost
 
-    def next(self):
-        next_node = self.matrix[self.y][self.x]
-        if self.x == self.column_count:
-            self.x = 0
-            self.y += 1
-        else:
-            self.x += 1
+    def set_cost(self, cost):
 
-        return next_node
+        self.cost = cost
+
+    def set_estimated_cost(self, estimated_cost):
+
+        self.cost = estimated_cost
+
+    def get_estimated_cost(self):
+
+        return self.cost
+
+    def increment_cost(self):
+
+        self.cost += 1
+
+    def priority_number(self):
+
+        return self.get_cost() + self.get_estimated_cost()
+
 
 if __name__ == '__main__':
     maze = Labyrinth()

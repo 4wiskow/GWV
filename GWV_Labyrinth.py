@@ -1,5 +1,6 @@
 from copy import deepcopy
 import sys
+import random
 
 
 class Labyrinth:
@@ -103,7 +104,7 @@ class Labyrinth:
                 if node != 'x' and node.is_start():
                     return node
 
-    def get_goal(self):
+    def get_goals(self):
         """
         Looks for the start node in the graph.
         :return: the start node
@@ -129,7 +130,7 @@ class Node:
     def __init__(self, type_of_node):
         self.typeOfNode = type_of_node
         self.neighbors = []
-        self.parentNode = None
+        self.parentNode = []
         self.position = (0, 0)
         self.cost = sys.maxint
         self.estimated_cost = sys.maxint
@@ -185,9 +186,9 @@ class Node:
         return self.typeOfNode == 's'
 
     def set_parent(self, node):
-        self.parentNode = node
+        self.parentNode.append(node)
 
-    def get_parent(self):
+    def get_parents(self):
         return self.parentNode
 
     def get_position(self):

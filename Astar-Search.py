@@ -52,9 +52,12 @@ def setup_frontier():
     start.set_cost(0)
     frontier.put((0, start))
 
-    goal_position = maze.get_goal().get_position()
+    goals = maze.get_goal()
+    goal_positions = []
+    for n in goals:
+        goal_positions.append(n.get_position())
 
-    get_path(A_star_search(frontier, closed_list, goal_position, maze))
+    get_path(A_star_search(frontier, closed_list, goal_positions, maze))
     maze.print_search_state()
 
 
@@ -64,15 +67,15 @@ def heuristic(node, goal_position):
     return manhattan_distance_windows(node.get_position(), goal_position)
 
 
+def portal_heuristic(node, goal_positions, maze):
+    values = []
+    for n in goal_positions:
+        if node.is_portal():
 
-def portal_heuristic(node, goal_position, maze):
-
-    if node.is_portal():
-
-        node = maze.get_other_portal(node.is_portal(), node.get_position())
-
-    #return sp.cityblock(node.get_position(), goal_position)
-    return manhattan_distance_windows(node.get_position(), goal_position)
+            node = maze.get_other_portal(node.is_portal(), node.get_position())
+        values.append(manhattan_distance_windows(node.get_position(), n))
+        #return sp.cityblock(node.get_position(), goal_position)
+    return min(values)
 
 
 def get_path(start_node):

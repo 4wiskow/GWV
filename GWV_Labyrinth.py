@@ -108,11 +108,12 @@ class Labyrinth:
         Looks for the start node in the graph.
         :return: the start node
         """
+        goals = []
         for row in self.representation:
             for node in row:
                 if node != 'x' and node.is_goal():
-                    return node
-
+                    goals.append(node)
+        return goals
 
     def get_other_portal(self, portal_type, position):
         for tuple in self.portals:

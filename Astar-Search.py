@@ -1,17 +1,17 @@
 from GWV_Labyrinth import Labyrinth as L
 
-import scipy.spatial.distance as sp
+#import scipy.spatial.distance as sp
 from Queue import PriorityQueue
 
 
 def A_star_search(frontier, closed_list, goal_position, maze):
-    #if frontier.empty():
-    #    return None
+
+    if frontier.empty():  # No more nodes to look at means there is no solution
+        return None
 
     current = frontier.get()[1]
 
     if current.is_goal():
-
         return current
 
     else:
@@ -23,36 +23,34 @@ def A_star_search(frontier, closed_list, goal_position, maze):
 
             current = portal
 
-
         open_neighbors = [x for x in current.get_neighbors() if x not in closed_list]
         #TODO: do we have update the cost if we a node in a shorter way
 
 
         for node in open_neighbors:
-            frontier_node = frontier.contains(node)
+            new_cost = current.get_cost()
 
-            node.set_parent(current)
-            node.increment_cost()
-            #node.set_estimated_cost(heuristic(node, goal_position))
-            node.set_estimated_cost(portal_heuristic(node, goal_position, maze))
+            if node.get_cost() > (new_cost + 1):  # update node if a shorter path than before has been found
+                node.set_parent(current)
+                node.set_cost(new_cost)
+                # node.set_estimated_cost(heuristic(node, goal_position))
+                node.set_estimated_cost(portal_heuristic(node, goal_position, maze))
 
-            if not frontier_node or frontier_node.priority_number() > node.priority_number():
                 frontier.put((node.priority_number(), node))
 
         closed_list.append(current)
 
-
         return A_star_search(frontier, closed_list, goal_position, maze)
+
 
 def setup_frontier():
 
     frontier = myQueue()
-
     closed_list = []
-
     maze = L()
-
-    frontier.put((0, maze.get_start()))
+    start = maze.get_start()
+    start.set_cost(0)
+    frontier.put((0, start))
 
     goal_position = maze.get_goal().get_position()
 
@@ -62,7 +60,9 @@ def setup_frontier():
 
 def heuristic(node, goal_position):
 
-    return sp.cityblock(node.get_position(), goal_position)
+    #return sp.cityblock(node.get_position(), goal_position)
+    return manhattan_distance_windows(node.get_position(), goal_position)
+
 
 
 def portal_heuristic(node, goal_position, maze):
@@ -71,7 +71,8 @@ def portal_heuristic(node, goal_position, maze):
 
         node = maze.get_other_portal(node.is_portal(), node.get_position())
 
-    return sp.cityblock(node.get_position(), goal_position)
+    #return sp.cityblock(node.get_position(), goal_position)
+    return manhattan_distance_windows(node.get_position(), goal_position)
 
 
 def get_path(start_node):
@@ -91,18 +92,26 @@ def get_path(start_node):
     print(path)
 
 
+def manhattan_distance_windows(u, v):
+    """
+    Implementation of scipy.spatial.distance.cityblock function,
+    because windows sucks ass.
+    """
+    return reduce((lambda x, y: x+y), map((lambda x, y: abs(x-y)), u, v))
+
+
 class myQueue(PriorityQueue):
     """Own naive implementation of a queue with added function checking for contents."""
     def _init(self, maxsize):
         self.queue = []
+
     def _put(self, item):
         self.queue.append(item)
+
     def _get(self):
         item = self.queue[0]
         self.queue = self.queue[1:]
         return item
-    def contains(self, item):
-        return item in self.queue
 
 
 if __name__ == "__main__":

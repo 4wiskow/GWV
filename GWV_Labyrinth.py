@@ -1,4 +1,5 @@
 from copy import deepcopy
+import sys
 
 
 class Labyrinth:
@@ -129,8 +130,8 @@ class Node:
         self.neighbors = []
         self.parentNode = None
         self.position = (0, 0)
-        self.cost =  0
-        self.estimated_cost = 0
+        self.cost = sys.maxint
+        self.estimated_cost = sys.maxint
 
 
     def __str__(self):
@@ -202,9 +203,9 @@ class Node:
 
         return self.cost
 
-    def set_cost(self, cost):
+    def set_cost(self, new_cost):
 
-        self.cost = cost
+        self.cost = new_cost
 
     def set_estimated_cost(self, estimated_cost):
 

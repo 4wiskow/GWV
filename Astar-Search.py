@@ -16,23 +16,23 @@ def A_star_search(frontier, closed_list, goal_position, maze):
 
     else:
         if current.is_portal():
-
             portal = maze.get_other_portal(current.is_portal(), current.get_position())
 
             portal.set_parent(current)
+
+            portal.set_cost(current.get_cost()+1)
 
             current = portal
 
         open_neighbors = [x for x in current.get_neighbors() if x not in closed_list]
         #TODO: do we have update the cost if we a node in a shorter way
 
-
         for node in open_neighbors:
             new_cost = current.get_cost()
 
             if node.get_cost() > (new_cost + 1):  # update node if a shorter path than before has been found
                 node.set_parent(current)
-                node.set_cost(new_cost)
+                node.set_cost(new_cost+1)
                 # node.set_estimated_cost(heuristic(node, goal_position))
                 node.set_estimated_cost(portal_heuristic(node, goal_position, maze))
 

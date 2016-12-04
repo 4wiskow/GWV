@@ -1,0 +1,102 @@
+
+
+The first impulse ist to look out for three letter word whose first letters are present in other choosable words.
+In a way your building a net. I wouldn’t make sense to choose arm in the first row for example because there is no word that start with m in the last columb.
+
+since there are  no unary constraints (all words have just three words) the words are domain consistent.
+
+
+the domains are always 2 for words that fit 6 fields:
+first domain has the fields: A1D1 A1D2 A1D3 A2D1 A3D1
+second domains " :           A2D1 A1D2 A2D2 A3D3 A3D2
+third domain is made up by   A3D1 A3D2 A3D3 A2D3 A1D3
+
+
+
+precondition for the first domains: every letter is a possible selection for a cell because of the first letter
+
+Domain(A2D2)
+={
+add, ado, age, ago, aid, ail, aim, air,
+and, any, ape, apt, arc, are, ark, arm,
+art, ash, ask, awe, awl, bad,
+bag, ban, bat, bee, ear, eel,
+far, fat, fit, lee, oaf, rat, tar, tie.
+}
+
+Domain(A1D1)
+={
+add, ado, age, ago, aid, ail, aim, air,
+and, any, ape, apt, arc, are, ark, arm,
+art, ash, ask, auk, awe, awl, aye, bad,
+bag, ban, bat, bee, boa, ear, eel, eft,
+far, fat, fit, tar, tie.
+}
+
+Domain(A3D3)
+={
+add, ado, age, ago, aid, ail, aim, air,
+and, ape, apt, arc, are, ark, arm,
+art, ask, auk, awe, awl, aye, bad,
+bat, bee, boa, ear, eel, eft,
+far, fat, fit, lee, rat, tar, tie.
+}
+
+From the previous Domains delete all letters that contain impossible second letters
+
+
+
+*second letter from A1D1 must be a possible first letter in A2D2
+so fulfill first an d second constraint
+A1D1* ={
+arc, are, ark, arm,art, bad,bag, ban, bat, bee, boa, ear, eel, eft,far, fat, tar,
+}
+
+
+*second letter of a1d1 must be the the first of a2d2
+A2D2* ={aid, air, and , any ,ape ,apt ,are, awe, ear, far, oaf}
+starting letters aefo
+
+
+*the middle letter of a3d3 must be the last of a2s2
+A3D3* ={add, are, arc, arm , art, eel, aft, age, and, ask, ark, aye, ear, far, fat, rat, tar, lee}
+
+
+
+**second letter of A1D1 must be the first of A2D2 (afeo)
+A1D1**={bad,bag, ban, bat, bee, boa, ear, eel, eft,far, fat, tar}
+
+**the second letter of a3d3 must the last of a2d2(d r y e t f)
+A3D3** ={add, are, arc, arm , art, eel, aft, and, ark, aye, lee, eft}
+
+**the last letter of a2d2 must be the middle letter in a3d3 (d r e f n y)
+A2D2** ={aid, air, and , any ,ape  ,are, awe, ear, far, oaf}
+
+
+*** the last of a1d1** must be the first a3d3** (a e l)
+a1d1***={
+ bee, boa, eel,
+}
+
+***the first letter of a2d2** must be the second of a1d1** (e o)
+A2D2*** ={ ear, oaf}
+
+***the first of a3d3** must be the first of a1d1**
+a3d3***= { are, arc, arm , art, aft, ark, eft}
+
+***deselct impossible singular last letters in a3d3** (c m e k)
+a3d3***= {  art, aft eft}
+
+------------------------------
+last letters in a1d1* must be the first of a3d3 (a e)
+a1d1****={
+ bee, boa
+}
+
+
+
+the solution is:
+
+a3d3**** = {art, eft}
+A2D2*** ={ ear, oaf}
+a1d1****={bee, boa}

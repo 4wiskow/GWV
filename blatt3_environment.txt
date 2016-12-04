@@ -1,5 +1,5 @@
 xxxxxxxxxxxxxxxxxxxx
-x2                 x
+x2        g        x
 x       xxx        x
 x   1   x xxxxx    x
 x   s     x        x

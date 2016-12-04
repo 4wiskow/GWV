@@ -32,13 +32,15 @@ def a_star_search(frontier, closed_list, goal_position, maze):
             new_cost = current.get_cost()
 
             #TODO this part allows us to find all optimal paths
-            if node.get_cost() >= (new_cost + 1):  # update node if a shorter/equally long path has been found
+            if node.get_cost() > (new_cost + 1):  # update node if a shorter/equally long path has been found
                 node.set_parent(current)
                 node.set_cost(new_cost+1)
                 # node.set_estimated_cost(heuristic(node, goal_position))
                 node.set_estimated_cost(portal_heuristic(node, goal_position, maze))
-
                 frontier.put((node.priority_number(), node))
+            elif node.get_cost() == (new_cost + 1):  # should have been like this to avoid reaching recursion limit
+                node.set_parent(current)
+
 
         closed_list.append(current)
 
@@ -67,7 +69,10 @@ def setup_frontier():
     # if there is a solution, print it, else print an error message!
     if end_of_path:
         paths = get_all_paths(end_of_path)
-        print_path(paths[0], maze)  # just an example
+        for p in paths:
+            print_path(p, maze)
+
+        #print_path(paths[0], maze)  # just an example
 
     else:
         print('no solution found!')

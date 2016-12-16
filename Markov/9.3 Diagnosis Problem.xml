@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BIF VERSION="0.3"  xmlns="http://www.cs.ubc.ca/labs/lci/fopi/ve/XMLBIFv0_3"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.cs.ubc.ca/labs/lci/fopi/ve/XMLBIFv0_3 http://www.cs.ubc.ca/labs/lci/fopi/ve/XMLBIFv0_3/XMLBIFv0_3.xsd">
+<NETWORK>
+<NAME>Untitled</NAME>
+<PROPERTY>detailed = </PROPERTY>
+<PROPERTY>short = </PROPERTY>
+
+<VARIABLE TYPE="nature">
+	<NAME>battery</NAME>
+	<OUTCOME>Funktioniert</OUTCOME>
+	<OUTCOME>Funktioniert nicht</OUTCOME>
+	<PROPERTY>position = (7597.0, 5007.0)</PROPERTY>
+</VARIABLE>
+
+<VARIABLE TYPE="nature">
+	<NAME>ignition key</NAME>
+	<OUTCOME>Funktioniert</OUTCOME>
+	<OUTCOME>Funktioniert Nicht</OUTCOME>
+	<PROPERTY>position = (7497.0, 5123.0)</PROPERTY>
+</VARIABLE>
+
+<VARIABLE TYPE="nature">
+	<NAME>electric fuel regulation</NAME>
+	<OUTCOME>Funktioniet</OUTCOME>
+	<OUTCOME>Funktioniet nicht</OUTCOME>
+	<PROPERTY>position = (7815.0, 5124.0)</PROPERTY>
+</VARIABLE>
+
+<VARIABLE TYPE="nature">
+	<NAME>starter</NAME>
+	<OUTCOME>Funktioniet</OUTCOME>
+	<OUTCOME>Funktioniet nicht</OUTCOME>
+	<PROPERTY>position = (7429.0, 5248.0)</PROPERTY>
+</VARIABLE>
+
+<VARIABLE TYPE="nature">
+	<NAME>engine</NAME>
+	<OUTCOME>Funktioniet</OUTCOME>
+	<OUTCOME>Funktioniet nicht</OUTCOME>
+	<PROPERTY>position = (7590.0, 5248.0)</PROPERTY>
+</VARIABLE>
+
+<VARIABLE TYPE="nature">
+	<NAME>filter</NAME>
+	<OUTCOME>Funktioniet</OUTCOME>
+	<OUTCOME>Funktioniet nicht</OUTCOME>
+	<PROPERTY>position = (7591.0, 5337.0)</PROPERTY>
+</VARIABLE>
+
+<VARIABLE TYPE="nature">
+	<NAME>fuel pump</NAME>
+	<OUTCOME>Funktioniet</OUTCOME>
+	<OUTCOME>Funktioniet nicht</OUTCOME>
+	<OBS>Funktioniet</OBS>
+	<PROPERTY>position = (7592.0, 5434.0)</PROPERTY>
+</VARIABLE>
+
+<VARIABLE TYPE="nature">
+	<NAME>fuel tank</NAME>
+	<OUTCOME>Funktioniet</OUTCOME>
+	<OUTCOME>Funktioniet nicht</OUTCOME>
+	<PROPERTY>position = (7592.0, 5533.0)</PROPERTY>
+</VARIABLE>
+
+<DEFINITION>
+	<FOR>battery</FOR>
+	<TABLE>0.9 0.1</TABLE>
+</DEFINITION>
+
+<DEFINITION>
+	<FOR>ignition key</FOR>
+	<GIVEN>battery</GIVEN>
+	<TABLE>0.9 0.1 0.0 1.0</TABLE>
+</DEFINITION>
+
+<DEFINITION>
+	<FOR>electric fuel regulation</FOR>
+	<GIVEN>battery</GIVEN>
+	<GIVEN>ignition key</GIVEN>
+	<TABLE>0.9 0.1 0.0 1.0 0.0 1.0 0.0 1.0</TABLE>
+</DEFINITION>
+
+<DEFINITION>
+	<FOR>starter</FOR>
+	<GIVEN>ignition key</GIVEN>
+	<TABLE>0.9 0.1 0.0 1.0</TABLE>
+</DEFINITION>
+
+<DEFINITION>
+	<FOR>engine</FOR>
+	<GIVEN>starter</GIVEN>
+	<GIVEN>filter</GIVEN>
+	<TABLE>0.9 0.1 0.0 1.0 0.0 1.0 0.0 1.0</TABLE>
+</DEFINITION>
+
+<DEFINITION>
+	<FOR>filter</FOR>
+	<GIVEN>fuel pump</GIVEN>
+	<TABLE>0.9 0.1 0.0 1.0</TABLE>
+</DEFINITION>
+
+<DEFINITION>
+	<FOR>fuel pump</FOR>
+	<GIVEN>electric fuel regulation</GIVEN>
+	<GIVEN>fuel tank</GIVEN>
+	<TABLE>0.9 0.1 0.0 1.0 0.0 1.0 0.0 1.0</TABLE>
+</DEFINITION>
+
+<DEFINITION>
+	<FOR>fuel tank</FOR>
+	<TABLE>0.9 0.1</TABLE>
+</DEFINITION>
+</NETWORK>
+</BIF>
